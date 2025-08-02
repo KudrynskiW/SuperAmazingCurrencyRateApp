@@ -8,7 +8,8 @@
 import SwiftUI
 
 enum Page: Hashable, Identifiable {
-    case ratesList, rateDetails(Rate)
+    case ratesList
+    case rateDetails(Rate)
     
     var id: String {
         switch self {
@@ -21,9 +22,13 @@ enum Page: Hashable, Identifiable {
 }
 
 final class Coordinator: ObservableObject {
-    let rateManager = RateManager(repository: NBPRatesRepository())
-    
+    let coordinatorFactory: any CoordinatorFactoryProtocol
     @Published var path = NavigationPath()
+    
+    init(coordinatorFactory: any CoordinatorFactoryProtocol, path: NavigationPath = NavigationPath()) {
+        self.coordinatorFactory = coordinatorFactory
+        self.path = path
+    }
     
     func push(page: Page) {
         path.append(page)
@@ -37,15 +42,19 @@ final class Coordinator: ObservableObject {
         path.removeLast(path.count)
     }
     
+    @MainActor
     @ViewBuilder
     func build(page: Page) -> some View {
         switch page {
         case .ratesList:
-            let viewModel = RatesListViewModel(rateManager: rateManager)
-            RatesListView(vm: { viewModel })
+            RatesListView(vm: { [unowned self] in
+                RatesListViewModel(rateManager: self.coordinatorFactory.prepareRateManager())
+            })
         case .rateDetails(let rate):
-            let viewModel = RateDetailsViewModel(rate: rate, rateManager: rateManager)
-            RateDetailsView(vm: { viewModel })
+            RateDetailsView(vm: { [unowned self] in
+                RateDetailsViewModel(rate: rate,
+                                     rateManager: self.coordinatorFactory.prepareRateManager())
+            })
         }
     }
     
