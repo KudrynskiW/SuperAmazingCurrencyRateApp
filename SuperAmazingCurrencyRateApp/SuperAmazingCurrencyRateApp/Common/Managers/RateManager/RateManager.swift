@@ -18,20 +18,19 @@ actor RateManager {
 extension RateManager: RateManagerProtocol {
     var ratesList: [RatesList] {
         get async throws {
-            try await withThrowingTaskGroup(of: RatesList.self) { [weak self] group in
+            try await withThrowingTaskGroup(of: RatesList?.self) { [weak self] group in
                 guard let self else { return [] }
                 
                 for table in RateDetails.TableType.allCases {
-                    group.addTask { try await self.repository.getTable(table: table) }
+                    group.addTask { try await self.repository.getTable(table: table).first }
                 }
                 
-                var result = [RatesList]()
-                
+                var result: [RatesList?] = []
                 for try await list in group {
                     result.append(list)
                 }
                 
-                return result
+                return result.compactMap { $0 }
             }
         }
     }

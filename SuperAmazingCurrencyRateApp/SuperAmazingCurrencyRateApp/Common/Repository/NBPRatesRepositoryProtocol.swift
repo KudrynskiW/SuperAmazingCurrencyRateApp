@@ -8,6 +8,6 @@
 import Foundation
 
 protocol NBPRatesRepositoryProtocol {
-    func getTable(table: RateDetails.TableType) async throws -> RatesList
+    func getTable(table: RateDetails.TableType) async throws -> [RatesList]
     func getRateDetails(table: RateDetails.TableType, currencyCode: String, dateFrom: Date, dateTo: Date) async throws -> RateDetails
 }

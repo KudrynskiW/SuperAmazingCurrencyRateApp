@@ -22,7 +22,7 @@ actor RateManagerTests {
     
     init() {
         repositoryMock = NBPRatesRepositoryMock()
-        repositoryMock.getTableReturnValue = .init(tableType: .a, tableNumber: "12345", publicationDate: "2025-08-01", rates: testRatesForList)
+        repositoryMock.getTableReturnValue = [.init(tableType: .a, tableNumber: "12345", publicationDate: "2025-08-01", rates: testRatesForList)]
         repositoryMock.getRateDetailsReturnValue = .init(tableType: .a, currency: "bat (Tajlandia)", currencyCode: "THB", rates: testRatesForDetails)
         
         sut = RateManager(repository: repositoryMock)

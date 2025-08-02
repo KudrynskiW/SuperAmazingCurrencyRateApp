@@ -11,7 +11,10 @@ import SwiftUI
 struct SuperAmazingCurrencyRateAppApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            let repository = NBPRatesRepository()
+            let rateManager = RateManager(repository: repository)
+            let viewModel = RatesListViewModel(rateManager: rateManager)
+            RatesListView(vm: { viewModel })
         }
     }
 }

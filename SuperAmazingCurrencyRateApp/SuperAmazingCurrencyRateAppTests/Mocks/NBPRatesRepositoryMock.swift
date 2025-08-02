@@ -10,11 +10,11 @@ import Foundation
 @testable import SuperAmazingCurrencyRateApp
 
 final class NBPRatesRepositoryMock: NBPRatesRepositoryProtocol {
-    var getTableReturnValue: RatesList?
+    var getTableReturnValue: [RatesList]?
     var getTableReturnCalled: Bool = false
     var getTableReturnCallsCount: Int = 0
-    var getTableReturnFallbackValue = RatesList(tableType: .a, tableNumber: "", publicationDate: "", rates: [])
-    func getTable(table: RateDetails.TableType) async throws -> RatesList {
+    var getTableReturnFallbackValue = [RatesList(tableType: .a, tableNumber: "", publicationDate: "", rates: [])]
+    func getTable(table: RateDetails.TableType) async throws -> [RatesList] {
         getTableReturnCalled = true
         getTableReturnCallsCount += 1
         

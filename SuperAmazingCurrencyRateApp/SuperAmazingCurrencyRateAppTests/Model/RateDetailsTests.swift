@@ -35,7 +35,7 @@ struct RateDetailsTests {
         #expect(rateDetails.currency == "funt szterling")
         #expect(rateDetails.currencyCode == "GBP")
         #expect(rateDetails.rates == [Rate(tableNumber: "135/A/NBP/2025",
-                                        publicationDate: "2025-07-15",
-                                        averageCourse: 4.8942)])
+                                           publicationDate: "2025-07-15",
+                                           averageCourse: 4.8942)])
     }
 }

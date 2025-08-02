@@ -6,10 +6,10 @@
 //
 
 public struct RatesList: Codable, Equatable {
-    let tableType: RateDetails.TableType
-    let tableNumber: String
-    let publicationDate: String
-    let rates: [Rate]
+    public let tableType: RateDetails.TableType
+    public let tableNumber: String
+    public let publicationDate: String
+    public let rates: [Rate]
     
     enum CodingKeys: String, CodingKey {
         case tableType = "table"
