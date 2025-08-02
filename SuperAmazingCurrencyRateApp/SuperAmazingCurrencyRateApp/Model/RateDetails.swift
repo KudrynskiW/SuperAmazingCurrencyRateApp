@@ -13,10 +13,10 @@ public struct RateDetails: Codable, Equatable {
         case b = "B"
     }
     
-    let tableType: TableType?
-    let currency: String
-    let currencyCode: String
-    let rates: [Rate]
+    public let tableType: TableType?
+    public let currency: String
+    public let currencyCode: String
+    public let rates: [Rate]
     
     enum CodingKeys: String, CodingKey {
         case tableType = "table"
@@ -30,5 +30,18 @@ public struct RateDetails: Codable, Equatable {
         self.currency = currency
         self.currencyCode = currencyCode
         self.rates = rates
+    }
+    
+    public func getSortedRates() -> [Rate] {
+        rates.sorted(by: {
+            if let firstDateString = $0.publicationDate,
+               let secondDateString = $1.publicationDate,
+               let firstDate = Date.fromNBPString(dateString: firstDateString),
+               let secondDate = Date.fromNBPString(dateString: secondDateString) {
+                return firstDate > secondDate
+            }
+            
+            return false
+        })
     }
 }

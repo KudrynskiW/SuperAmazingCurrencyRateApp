@@ -16,7 +16,7 @@ extension Date {
         return dateFormatter.date(from: dateString)
     }
     
-    func toNBPString(locale: Locale = .current) -> String? {
+    func toNBPString(locale: Locale = .current) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = locale
         dateFormatter.dateFormat = "yyyy-MM-dd"

@@ -41,14 +41,15 @@ actor NBPRatesRepository {
 }
 
 extension NBPRatesRepository: NBPRatesRepositoryProtocol {
-    func getTable(table: RateDetails.TableType) async throws -> RatesList {
-        try await makeRequest(model: RatesList.self,
+    func getTable(table: RateDetails.TableType) async throws -> [RatesList] {
+        try await makeRequest(model: [RatesList].self,
                               request: GetTableRequest(),
                               additionalPath: table.rawValue)
     }
     
     func getRateDetails(table: RateDetails.TableType, currencyCode: String, dateFrom: Date, dateTo: Date) async throws -> RateDetails {
-        let additionalPath = "\(table.rawValue)/\(currencyCode)/\(dateFrom)/\(dateTo)"
+        let additionalPath = "\(table.rawValue)/\(currencyCode)/" + dateFrom.toNBPString() + "/" + dateTo.toNBPString()
+        
         return try await makeRequest(model: RateDetails.self,
                                      request: GetRateDetailsRequest(),
                                      additionalPath: additionalPath)
