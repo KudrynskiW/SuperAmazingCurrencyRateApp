@@ -6,7 +6,7 @@
 //
 
 public struct RatesList: Codable, Equatable {
-    let tableType: String
+    let tableType: RateDetails.TableType
     let tableNumber: String
     let publicationDate: String
     let rates: [Rate]
@@ -18,7 +18,7 @@ public struct RatesList: Codable, Equatable {
         case rates
     }
     
-    public init(tableType: String, tableNumber: String, publicationDate: String, rates: [Rate]) {
+    public init(tableType: RateDetails.TableType, tableNumber: String, publicationDate: String, rates: [Rate]) {
         self.tableType = tableType
         self.tableNumber = tableNumber
         self.publicationDate = publicationDate
