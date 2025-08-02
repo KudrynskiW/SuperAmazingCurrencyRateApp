@@ -9,6 +9,7 @@ import SwiftUI
 
 struct RatesListView<VM: RatesListViewModelProtocol>: View {
     @StateObject private var viewModel: VM
+    @EnvironmentObject private var coordinator: Coordinator
     
     init(vm: @escaping () -> VM) {
         self._viewModel = StateObject(wrappedValue: vm())
@@ -18,8 +19,8 @@ struct RatesListView<VM: RatesListViewModelProtocol>: View {
         NavigationView {
             ZStack {
                 List(viewModel.rates, id: \.self) { rate in
-                    NavigationLink {
-                        RateDetailsView(vm: { RateDetailsViewModel(rate: rate, rateManager: RateManager(repository: NBPRatesRepository())) })
+                    Button {
+                        coordinator.push(page: .rateDetails(rate))
                     } label: {
                         CurrencyListCellView(rate: rate)
                     }
