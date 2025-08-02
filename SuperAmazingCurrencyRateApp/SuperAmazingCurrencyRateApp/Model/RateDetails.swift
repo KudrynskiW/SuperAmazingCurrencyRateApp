@@ -8,7 +8,12 @@
 import Foundation
 
 public struct RateDetails: Codable, Equatable {
-    let tableType: String?
+    public enum TableType: String, Codable, Equatable, CaseIterable {
+        case a = "A"
+        case b = "B"
+    }
+    
+    let tableType: TableType?
     let currency: String
     let currencyCode: String
     let rates: [Rate]
@@ -20,7 +25,7 @@ public struct RateDetails: Codable, Equatable {
         case rates
     }
     
-    public init(tableType: String?, currency: String, currencyCode: String, rates: [Rate]) {
+    public init(tableType: TableType, currency: String, currencyCode: String, rates: [Rate]) {
         self.tableType = tableType
         self.currency = currency
         self.currencyCode = currencyCode

@@ -31,7 +31,7 @@ struct RatesListTests {
         let jsonData = rateListJSONString.data(using: .utf8)
         let rateList: RatesList = try JSONDecoder().decode(RatesList.self, from: jsonData ?? Data())
         
-        #expect(rateList.tableType == "A")
+        #expect(rateList.tableType == .a)
         #expect(rateList.tableNumber == "148/A/NBP/2025")
         #expect(rateList.publicationDate == "2025-08-01")
         #expect(rateList.rates == [Rate(currency: "bat (Tajlandia)",
