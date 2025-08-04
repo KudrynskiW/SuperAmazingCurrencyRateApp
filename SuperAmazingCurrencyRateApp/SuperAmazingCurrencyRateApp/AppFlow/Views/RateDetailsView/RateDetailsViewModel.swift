@@ -13,7 +13,8 @@ protocol RateDetailsViewModelProtocol: ObservableObject {
     var rateDetails: RateDetails? { get }
     var isLoading: Bool { get }
     
-    func isMoreThanTenPercentFromLatest(rate: Rate)  -> Bool
+    func onAppear() async
+    func isMoreThanTenPercentFromLatest(rate: Rate) -> Bool
 }
 
 final class RateDetailsViewModel: RateDetailsViewModelProtocol {
@@ -28,14 +29,10 @@ final class RateDetailsViewModel: RateDetailsViewModelProtocol {
          rateManager: any RateManagerProtocol) {
         self.sourceRate = rate
         self.rateManager = rateManager
-        
-        Task { @MainActor in
-            await setupBindings()
-        }
     }
     
     @MainActor
-    private func setupBindings() async {
+    func onAppear() async {
         guard let rateTableType = sourceRate.tableType,
               let rateCurrencyCode = sourceRate.currencyCode else { return }
         

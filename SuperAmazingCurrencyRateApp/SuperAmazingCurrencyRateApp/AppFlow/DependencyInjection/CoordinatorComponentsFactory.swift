@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-final class CoordinatorFactory: CoordinatorFactoryProtocol {
+final class CoordinatorComponentsFactory: CoordinatorComponentsFactoryProtocol {
     func prepareRateManager() -> RateManagerProtocol {
         RateManager(repository: prepareNBPRatesRepository())
     }

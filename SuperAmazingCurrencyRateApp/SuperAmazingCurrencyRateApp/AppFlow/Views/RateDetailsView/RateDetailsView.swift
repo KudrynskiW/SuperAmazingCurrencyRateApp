@@ -30,6 +30,7 @@ struct RateDetailsView<VM: RateDetailsViewModelProtocol>: View {
         }
         .navigationTitle(viewModel.navigationTitle)
         .navigationBarTitleDisplayMode(.inline)
+        .task { await viewModel.onAppear() }
     }
 }
 
