@@ -33,6 +33,7 @@ struct RatesListView<VM: RatesListViewModelProtocol>: View {
             }
             .navigationTitle("SuperAmazing Currency Rate App")
             .navigationBarTitleDisplayMode(.inline)
+            .task { await viewModel.onAppear() }
         }
     }
 }

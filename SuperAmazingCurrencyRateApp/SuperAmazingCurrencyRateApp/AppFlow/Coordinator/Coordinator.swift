@@ -22,11 +22,11 @@ enum Page: Hashable, Identifiable {
 }
 
 final class Coordinator: ObservableObject {
-    let coordinatorFactory: any CoordinatorFactoryProtocol
+    let coordinatorComponentsFactory: any CoordinatorComponentsFactoryProtocol
     @Published var path = NavigationPath()
     
-    init(coordinatorFactory: any CoordinatorFactoryProtocol, path: NavigationPath = NavigationPath()) {
-        self.coordinatorFactory = coordinatorFactory
+    init(coordinatorComponentsFactory: any CoordinatorComponentsFactoryProtocol, path: NavigationPath = NavigationPath()) {
+        self.coordinatorComponentsFactory = coordinatorComponentsFactory
         self.path = path
     }
     
@@ -48,12 +48,12 @@ final class Coordinator: ObservableObject {
         switch page {
         case .ratesList:
             RatesListView(vm: { [unowned self] in
-                RatesListViewModel(rateManager: self.coordinatorFactory.prepareRateManager())
+                RatesListViewModel(rateManager: self.coordinatorComponentsFactory.prepareRateManager())
             })
         case .rateDetails(let rate):
             RateDetailsView(vm: { [unowned self] in
                 RateDetailsViewModel(rate: rate,
-                                     rateManager: self.coordinatorFactory.prepareRateManager())
+                                     rateManager: self.coordinatorComponentsFactory.prepareRateManager())
             })
         }
     }

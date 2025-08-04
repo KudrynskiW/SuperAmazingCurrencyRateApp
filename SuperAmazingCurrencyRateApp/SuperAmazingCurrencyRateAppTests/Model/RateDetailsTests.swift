@@ -38,4 +38,23 @@ struct RateDetailsTests {
                                            publicationDate: "2025-07-15",
                                            averageCourse: 4.8942)])
     }
+    
+    @Test
+    func rateDetails_ratesSortedProperly() {
+        let rateDetailsRates: [Rate] = [.init(tableNumber: "testNum2",
+                                              publicationDate: Calendar.current.date(byAdding: .day, value: -1, to: .now)?.toNBPString(),
+                                              averageCourse: 10.0),
+                                        .init(tableNumber: "testNum",
+                                              publicationDate: Date().toNBPString(),
+                                              averageCourse: 12.0)]
+        let rateDetails: RateDetails = .init(tableType: .a,
+                                             currency: "Polish Zloty",
+                                             currencyCode: "PLN",
+                                             rates: rateDetailsRates)
+        
+        let sortedRates = rateDetails.getSortedRates()
+        
+        #expect(sortedRates.first == rateDetailsRates.last)
+        #expect(sortedRates.last == rateDetailsRates.first)
+    }
 }
